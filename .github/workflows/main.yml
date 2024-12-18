@@ -1,0 +1,33 @@
+name: Run LiveKit Assistant
+
+on: [push, workflow_dispatch] # Trigger on push or manual run
+
+jobs:
+  run-assistant:
+    runs-on: ubuntu-latest # Use a Linux environment to run the script
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' # Use the required Python version
+
+      - name: Install Dependencies
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Run Assistant
+        env:
+          LIVEKIT_URL: ${{ wss://real-time-ai-assistant-tb8guc75.livekit.cloud }}
+          LIVEKIT_API_KEY: ${{ APISMj7KB3F8bQa }}
+          LIVEKIT_API_SECRET: ${{ 64dQYVliy9Ks0vnrqpnubIRHSwG4OEZ41a6VXDA5XyB }}
+      
+          DEEPGRAM_API_KEY: ${{ 1f624eedcb312681ba867878d19613d7eee275e9 }}
+        run: |
+          source .venv/bin/activate
+          python assistant.py
